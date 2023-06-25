@@ -39,6 +39,9 @@ COPY --from=build /app/app/widget/dist/index.html ./public/bot.html
 # Copy script
 COPY --from=build /app/app/script/dist/chat.min.js ./public/chat.min.js
 
+# Install node-gyp globally (see https://stackoverflow.com/questions/39674390/error-with-npm-install-a-pre-gyp-error)
+RUN npm install -g node-gyp
+
 RUN yarn install --production
 
 ENV NODE_ENV=production
