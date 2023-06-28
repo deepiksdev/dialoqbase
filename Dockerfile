@@ -6,6 +6,9 @@ RUN apt update
 
 COPY ./server/ .
 
+# Install Python
+RUN apt update && apt -y install --no-install-recommends python3
+
 RUN yarn install
 
 RUN yarn build
@@ -27,13 +30,6 @@ WORKDIR /app
 RUN apt update && apt -y install --no-install-recommends ca-certificates git git-lfs openssh-client curl jq cmake sqlite3 openssl psmisc python3
 RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}/
 RUN npm --no-update-notifier --no-fund --global install pnpm
-
-# See https://stackoverflow.com/questions/73702364/node-gyp-cant-find-python-when-building-docker-images
-RUN apk add --update --no-cache python3 build-base gcc && ln -sf /usr/bin/python3 /usr/bin/python
-
-
-
-
 # Copy API
 COPY --from=server /app/dist/ .
 COPY --from=server /app/prisma/ ./prisma
@@ -46,8 +42,7 @@ COPY --from=build /app/app/widget/dist/index.html ./public/bot.html
 # Copy script
 COPY --from=build /app/app/script/dist/chat.min.js ./public/chat.min.js
 
-
-RUN yarn install --production
+RUN yarn install --production --python="/usr/bin/python3"
 
 ENV NODE_ENV=production
 
