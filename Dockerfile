@@ -47,6 +47,7 @@ COPY --from=build /app/app/script/dist/chat.min.js ./public/chat.min.js
 
 RUN yarn install --production --python="/usr/bin/python3"
 
-ENV NODE_ENV=production
+
+# ENV NODE_ENV=production
 
 CMD ["yarn", "start"]

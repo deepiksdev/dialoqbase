@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Project",
+        "type": "node",
+        "request": "launch",
+        "runtimeExecutable": "pnpm",
+        "args": [
+          "--stream",
+          "-r",
+          "run",
+          "dev"
+        ],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal"
+      }
+    ]
+  }
+  
+  

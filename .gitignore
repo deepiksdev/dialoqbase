@@ -6,3 +6,4 @@ docker/.*
 !docker/.env
 docker/.env
 .DS_Store
+.pnpm-store/*
