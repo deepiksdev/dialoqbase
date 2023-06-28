@@ -7,7 +7,8 @@ RUN apt update
 COPY ./server/ .
 
 # Install Python
-RUN apt update && apt -y install --no-install-recommends python3
+RUN apt update && apt -y install --no-install-recommends pkg-config cmake-data  python3
+RUN apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
 RUN yarn install
 
@@ -27,7 +28,9 @@ RUN pnpm build
 FROM node:18-slim
 WORKDIR /app
 
-RUN apt update && apt -y install --no-install-recommends ca-certificates git git-lfs openssh-client curl jq cmake sqlite3 openssl psmisc python3
+RUN apt update && apt -y install --no-install-recommends ca-certificates git git-lfs openssh-client curl jq cmake sqlite3 openssl psmisc pkg-config cmake-data python3
+RUN apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
 RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,dpkg,cache,log}/
 RUN npm --no-update-notifier --no-fund --global install pnpm
 # Copy API
